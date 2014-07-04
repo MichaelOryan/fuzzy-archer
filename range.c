@@ -1,61 +1,112 @@
+#ifndef RANGE_C
+#define RANGE_C
+
 #include <stdio.h>
+#include <limits.h>
 
-int acc[15];
-int a, i;
-int r1 = 0, r2 = 0, r3= 0, r4 = 0, r5 = 0, r6 = 0;
+/*  Number of ranges */
+#ifndef NUM_OF_RANGES
+#define NUM_OF_RANGES 6
+#endif // NUM_OF_RANGES
 
-main()
+
+/*  Size of ranges */
+#ifndef SIZE_OF_RANGES
+#define SIZE_OF_RANGES 100
+#endif // SIZE_OF_RANGES
+
+/*  Define our boolean values */
+typedef enum {false, true} bool;
+
+/*  Holds the frequency of numbers entered between r_min and r_max */
+typedef struct Range{
+    int r_min;
+    int r_max;
+    int r_count;
+}Range;
+
+/*  Stores our list of Ranges */
+typedef struct Records{
+    int r_size;
+    Range ranges[NUM_OF_RANGES];
+}Records;
+
+/*  Prototype Functions */
+
+Range setRange(int r_min, int r_max, int start_count);
+Records setStartingRecords(int r_start, int spacing, bool unlimited_end_value);
+Records countFrequencies(Records recs);
+void displayRanges(Records records);
+
+int main()
 {
-      updateRange();
-      displayRange();
-      return 0;
+    Records records = setStartingRecords(0, SIZE_OF_RANGES, true);
+    records = countFrequencies(records);
+    displayRanges(records);
+    return 0;
 }
 
-void updateRange()
+/*  Makes a Records structure with ranges starting from r_start and covering int spacing numbers afterwards.
+ *  Ranges do not overlap.
+ *  unlimited_end value signifies that the last range should capture all values above it's minimum. */
 
-{
-      for (i = 0; i < 15; i++)
-      {
-            printf("Enter an accident count <negative to end>:\n");
-            scanf(" %d", &acc[i]);
-            a= acc[i];
-      return;
+Records setStartingRecords(int r_start, int spacing, bool unlimited_end_value){
+    Records new_records = {};
+    new_records.r_size = NUM_OF_RANGES;
+    int i = 0;
+    for(i = 0; i < NUM_OF_RANGES; i++){
+        new_records.ranges[i] = setRange(r_start, r_start + spacing - 1, 0);
+        r_start += spacing;
+    }
+    if(unlimited_end_value){
+        new_records.ranges[NUM_OF_RANGES - 1].r_max = INT_MAX;
+    }
+    return new_records;
 }
 
-void displayRange()
- {
-      do
-      {
-            if ((a >= 0) && (a <= 99))
-            {r1= r1 + 1;}
+/*  Creates and returns a Range struct */
+Range setRange(int r_min, int r_max, int start_count){
+    Range range = {r_min, r_max, start_count};
+    return range;
+}
 
-            else if ((a >= 100) && (a <= 199))
-            {r2 = r2 + 1;}
+/*  Gets user input for the values. Increments the Range count that the inputed number falls in. */
 
-            else if ((a >= 200) && (a <= 299))
-            {r3 = r3 + 1;}
-
-            else if ((a >= 300) && (a <= 399))
-            {r4 = r4 + 1;}
-
-            else if ((a >= 400) && (a <= 499))
-            {r5 = r5 + 1;}
-
-            else if (a >= 500)
-            {r6 = r6 + 1;}
-
-            else if (a <= -1)
-            {
-                  printf("\n Range Frequency");
-                  printf("\n 0-99             %d", r1);
-                  printf("\n 100-199          %d", r2);
-                  printf("\n 200-299          %d", r3);
-                  printf("\n 300-399          %d", r4);
-                  printf("\n 400-499          %d", r5);
-                  printf("\n 500 or above     %d", r6);
-
+Records countFrequencies(Records recs){
+    int nextNum = 0;
+    printf("Enter values or -1 to end:\n");
+    while(nextNum != -1){
+        scanf(" %d", &nextNum);
+        int i = 0;
+        for(i = 0; i < recs.r_size; i++)
+        {
+            if(recs.ranges[i].r_min <= nextNum && recs.ranges[i].r_max >= nextNum){
+                recs.ranges[i].r_count++;
             }
-      } while (a <= -1);
-      system ("pause");
-      return;
+        }
+    }
+    return recs;
+
 }
+
+/*  Outputs the frequency of each range in records */
+
+void displayRanges(Records records){
+    printf("\n Range Frequency");
+    int i = 0;
+    for(i = 0; i < NUM_OF_RANGES; i++){
+            Range range = records.ranges[i];
+        if(range.r_max == INT_MAX){
+            printf("\n %d and above\t%d", range.r_min, range.r_count);
+        }
+        else if (range.r_max < 100){
+            printf("\n %d - %d\t\t%d", range.r_min, range.r_max, range.r_count);
+        }
+        else{
+            printf("\n %d - %d\t%d", range.r_min, range.r_max, range.r_count);
+        }
+
+    }
+}
+
+#endif // RANGE
