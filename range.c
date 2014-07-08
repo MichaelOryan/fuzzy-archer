@@ -1,3 +1,18 @@
+/*
+
+Set some ranges of buckets, get some values, print how many fall into each bucket
+
+Ranges start from some value, have the same size as each other.
+Except the last one can catch all values larger than it.
+
+TODO:
+Remove -1 as the sentinal value and have an alternative
+Make it so the smallest one can hold all values smaller than it.
+Make it so you can add multiple of values. eg; input the expression 124 * 12 add 12 values of 124 to the count
+
+
+*/
+
 #ifndef RANGE_C
 #define RANGE_C
 
