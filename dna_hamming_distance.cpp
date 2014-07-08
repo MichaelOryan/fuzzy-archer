@@ -5,6 +5,11 @@
 
   When compiling you can define the type of text asked for by defining NAME_OF_STRING as a string literal. "text in here"
   And the range of possible letters by defining VALID_RANGE of a string literal of all valid characters. "valid range"
+
+  TODO:
+
+  Make a library for the functions I can just plop it into other projects rather than recode.
+
 */
 
 #include <string>
@@ -17,6 +22,8 @@
 #ifndef VALID_RANGE
 #define VALID_RANGE "ACGT"
 #endif // VALID_RANGE
+
+const int NOT_SAME_SIZE = -1;
 
 std::string getString(const std::string &s_valid);
 int calcHamming(const std::string &s_first, const std::string &s_second);
@@ -34,9 +41,9 @@ int main()
     std::string s_second = getString(s_valid);
 
     /* Check length. Hamming Distance Calculation requires equal length strings */
-    if(s_first.size() == s_second.size()){
-        int h_distance = calcHamming(s_first, s_second);
-        std::cout << "Hamming Distance of " << h_distance << std::endl;
+    int h_distance = calcHamming(s_first, s_second);
+    if(h_distance != NOT_SAME_SIZE){
+      std::cout << "Hamming Distance of " << h_distance << std::endl;
     }
     else{
         std::cout << "Strings differ in length. Not able to calculate hamming distance." << std::endl;
@@ -58,11 +65,16 @@ std::string getString(const std::string &s_valid){
     return input;
 }
 
-/* Calculate the Hamming distance of two strings only looking at upto the length of the shortest */
+/* Calculate and return the Hamming distance of two strings of the same length or return NOT_SAME_SIZE */
 int calcHamming(const std::string &s_first, const std::string &s_second){
     int count = 0;
-    for(unsigned int i = 0; i < s_first.size() && i < s_second.size(); i++){
-        count += s_first.at(i) == s_second.at(i) ? 0 : 1;
+    if(s_first.size() != s_second.size()){
+      count = NOT_SAME_SIZE;
+    }
+    else{
+        for(unsigned int i = 0; i < s_first.size() && i < s_second.size(); i++){
+            count += s_first.at(i) == s_second.at(i) ? 0 : 1;
+        }
     }
     return count;
 }
