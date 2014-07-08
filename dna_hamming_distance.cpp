@@ -47,12 +47,12 @@ std::string getString(const std::string &s_valid){
     std::string input;
 
     std::cout << "Enter a " << NAME_OF_STRING << ". Valid letters " << s_valid << ":" << std::flush;
-    std::cin >> input;
+    std::getline(std::cin, input);
 
     while(input.find_first_not_of(s_valid) != std::string::npos){
         std::cout << "Invalid letter entered.\n";
         std::cout << "Enter a " << NAME_OF_STRING << ". Valid letters " << s_valid << ":" << std::flush;
-        std::cin >> input;
+        std::getline(std::cin, input);
     }
     return input;
 }
