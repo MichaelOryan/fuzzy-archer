@@ -38,6 +38,9 @@ Records setStartingRecords(int r_start, int spacing, bool unlimited_end_value);
 Records countFrequencies(Records recs);
 void displayRanges(Records records);
 
+
+/* Set some ranges of buckets, get some values, print how many fall into each bucket */
+
 int main()
 {
     Records records = setStartingRecords(0, SIZE_OF_RANGES, true);
