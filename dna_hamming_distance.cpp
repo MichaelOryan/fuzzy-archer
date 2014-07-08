@@ -12,10 +12,11 @@
 
 #ifndef NAME_OF_STRING
 #define NAME_OF_STRING "DNA strand"
-#endif
+#endif // NAME_OF_STRING
+
 #ifndef VALID_RANGE
 #define VALID_RANGE "ACGT"
-#endif
+#endif // VALID_RANGE
 
 std::string getString(const std::string &s_valid);
 int calcHamming(const std::string &s_first, const std::string &s_second);
