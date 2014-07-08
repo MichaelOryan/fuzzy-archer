@@ -9,6 +9,9 @@
   TODO:
 
   Make a library for the functions I can just plop it into other projects rather than recode.
+    - The #defines will need to be removed from the library code to ensure no collisions.
+      Which is ok because we can just pass them as variables as we won't be recompiling the library
+      each time we want a different set of values for NAME_OF_STRING or VALID_RANGE
 
 */
 
