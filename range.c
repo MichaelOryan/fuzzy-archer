@@ -9,6 +9,10 @@ TODO:
 Remove -1 as the sentinal value and have an alternative
 Make it so the smallest one can hold all values smaller than it.
 Make it so you can add multiple of values. eg; input the expression 124 * 12 add 12 values of 124 to the count
+Binary search algorithm for finding correct range so it's more efficient for large numbers of ranges.
+    I wonder if starting from the average bucket might improve the search further.
+    Obviously be careful of large numbers.
+    Maybe use the index of the buckets holding values rather than the values entered.
 
 
 */
@@ -72,10 +76,14 @@ Records setStartingRecords(int r_start, int spacing, bool unlimited_end_value){
     Records new_records = {};
     new_records.r_size = NUM_OF_RANGES;
     int i = 0;
+    
+    /* Populate ranges */
     for(i = 0; i < NUM_OF_RANGES; i++){
         new_records.ranges[i] = setRange(r_start, r_start + spacing - 1, 0);
         r_start += spacing;
     }
+    
+    /* Make the last range a greater than the minimum value if required */
     if(unlimited_end_value){
         new_records.ranges[NUM_OF_RANGES - 1].r_max = INT_MAX;
     }
@@ -93,9 +101,11 @@ Range setRange(int r_min, int r_max, int start_count){
 Records countFrequencies(Records recs){
     int nextNum = 0;
     printf("Enter values or -1 to end:\n");
+    /* Check for -1 sentinal value */
     while(nextNum != -1){
         scanf(" %d", &nextNum);
         int i = 0;
+        /* Increment range that the number fall in. */
         for(i = 0; i < recs.r_size; i++)
         {
             if(recs.ranges[i].r_min <= nextNum && recs.ranges[i].r_max >= nextNum){
