@@ -6,6 +6,7 @@
   TODO:
   Make it more efficient such as optimising the recursive algorithm for pow
   and looking for a better way of calculating the root.
+  (Bug) Ensure it handles negative number roots properly.
 
 */
 
