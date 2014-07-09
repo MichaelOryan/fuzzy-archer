@@ -2,6 +2,10 @@
 
   My first attempt at using templates and solving partial powers.
   Hasn't been fully tested but appears to work for all numbers.
+  
+  TODO:
+  Make it more efficient such as optimising the recursive algorithm for pow
+  and looking for a better way of calculating the root.
 
 */
 
