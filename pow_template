@@ -12,6 +12,7 @@
         - Numbers here seem to flip their sign based on the last +- 1 / n 
       - Numbers less than -1 flip their sign after becoming lower than the last negative integer.
         - Make sure that happens for 0 and slightly less than 0.
+  (Bug)  Currently Hangs on partial powers for negative numbers.
 
 */
 
