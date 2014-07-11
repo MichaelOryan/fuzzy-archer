@@ -2,19 +2,22 @@
 
   My first attempt at using templates and solving partial powers.
   Hasn't been fully tested but appears to work for all numbers.
-  
+
   TODO:
   Make it more efficient such as optimising the recursive algorithm for pow
   and looking for a better way of calculating the root.
   (Bug) Ensure it handles negative number roots properly.
     - Looks like negative numbers are interesting.
       - Numbers between -1 and 1 can produce a real number and an imaginary number.
-        - Numbers here seem to flip their sign based on the last +- 1 / n 
+        - Numbers here seem to flip their sign based on the last +- 1 / n
       - Numbers less than -1 flip their sign after becoming lower than the last negative integer.
         - Make sure that happens for 0 and slightly less than 0.
   (Bug)  Currently Hangs on partial powers for negative numbers.
+        Aw. Cmath doens't even calculate this. It just gives NaN.
+        Time to look at implementing a pair of numbers of real and imaginary.
 
 */
+#include <cmath>
 
 #include <iostream>
 
@@ -55,13 +58,14 @@ double pow(B base, P power){
 
 template <typename B, typename P>
 void printPow(B base, P power){
-    cout << "Base: " << base << "\t Power: " << power << "\t result: " << pow(base, power) << endl;
+    //cout << "Base: " << base << "\t Power: " << power << "\t result: " << pow(base, power) << endl;
+    cout << "Base: " << base << "\t Power: " << power << "\t result: " << std::pow(base, power) << endl;
 }
 
 
 
 int main()
 {
-    printPow(7, -2.5);
+    printPow(-2, -3.1);
     return 0;
 }
