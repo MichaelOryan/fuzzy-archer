@@ -1,70 +1,135 @@
-#include <iostream>
-#include <string>
+/*********************************************************************
+ * Functions for Reversing an array of ints with an arbutrary length *
+ * and printing out an array of integers                             *
+ *********************************************************************/
 
-/* Takes a string type and prints to std output the reverse of that string */
-void printReverse(const std::string &to_reverse){
+#include <stdio.h>
 
-    /* Get the number of characters to print */
-    unsigned int characters_remaining = to_reverse.length();
+void printIntArray(int *nums, unsigned int size);
+void printIntArrayLn(int nums[], unsigned int size);
+void printIntArrayMemory(int *first, int *last);
+void printIntArrayPfix(char prefix[], int nums[], unsigned int size, char postfix[]);
+void printReverseIntArray(int nums[], unsigned int size);
+void reverseIntMemory(int *first, int *last);
+void reverseIntArray(int nums[], unsigned int size);
+void swapInt(int *a, int *b);
 
-    /* While we have characters to print */
-    while(characters_remaining > 0)
-    {
-        /* Calculate the position of our last character */
-        unsigned int last_character_index = characters_remaining - 1;
 
-        /* Print the last character to std output */
-        std::cout << to_reverse.at(last_character_index);
+/* Driver */
 
-        /* We are done with that character so we now have one less character to worry about */
-        characters_remaining = characters_remaining - 1;
-    }
-
-    /* Flush output stream. Only requires one of the below */
-
-    /* Flush without newline */
-    std::cout << std::flush;
-
-    /* Flush with a new line */
-    std::cout << std::endl;
+main()
+{
+    int nums[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    unsigned int len = sizeof(nums)/sizeof(int);
+    
+    printIntArrayPfix("Original Array\n", nums, len, "\n");
+    
+    reverseIntArray(nums, len);
+    
+    printIntArrayPfix("Reverse Array\n", nums, len, "\n");
+    
+    printf("Reverse of the reverse array\n");
+    printReverseIntArray(nums, len);
+    
+    return 0;
 }
 
-void printReverse(const char to_reverse[], const unsigned int &array_size){
 
-    /* Get the number of characters to print */
-    unsigned int characters_remaining = array_size;
+/*******************************
+ * Swapping elements functions *
+ *******************************/
 
-    /* While we have characters to print */
-    while(characters_remaining > 0)
-    {
-        /* Calculate the position of our last character */
-        unsigned int last_character_index = characters_remaining - 1;
+/* Swaps the values of two integers given their memory locations */
 
-        /* Print the last character to std output */
-        std::cout << to_reverse[last_character_index];
-
-        /* We are done with that character so we now have one less character to worry about */
-        characters_remaining = characters_remaining - 1;
-    }
-
-    /* Flush output stream. Only requires one of the below */
-
-    /* Flush without newline */
-    std::cout << std::flush;
-
-    /* Flush with a new line */
-    std::cout << std::endl;
+void swapInt(int *a, int *b)
+{
+    int tmp = *a;
+    *a = *b;
+    *b = tmp;
 }
 
-void printReverseRecursive(const char to_reverse[], const unsigned int &number_of_characters){
-    
-    /* Check that we have characters to print */
-    if(number_of_characters >= 1){
-    
-        /* Print the next character first */
-        printReverse(&to_reverse[1], number_of_characters - 1);
-    
-        /* Print the current character */
-        cout << to_reverse[0];
+/* Reverses all memory between two memory addresses as ints */
+
+void reverseIntMemory(int *first, int *last)
+{
+    const int direction = first < last ? 1 : -1;
+
+    while(first != last)
+    {
+        swapInt(first, last);
+        first += direction;
+        last -= direction;
+    }    
+
+}
+
+/* Reverses an array of integers given the first element and total number of elements */
+
+void reverseIntArray(int nums[], unsigned int size)
+{
+    if(size > 0)
+    {
+        reverseIntMemory(nums, &nums[size-1]);
     }
+}
+
+
+/*******************************
+ * Printing an array functions *
+ *******************************/
+
+/* Prints all memory locations from the first to the last memory addresses as integers separted by a comma and space */
+
+void printIntArrayMemory(int *first, int *last)
+{
+    const int direction = first < last ? 1 : -1;
+    while(first != last)
+    {
+        printf("%d,", *first);
+        first += direction;
+    }
+
+    printf("%d", *first);
+}
+
+
+/* Prints the reverse order of all integer values of an array separating each value by a comma and space. */
+
+void printReverseIntArray(int nums[], unsigned int size)
+{
+    unsigned int i = 0;
+    
+    if(size > 0)
+    {
+        printIntArrayMemory(&nums[size-1], nums);
+    }
+}
+
+
+/* Prints all integer values of an array separating each value by a comma and space. */
+
+void printIntArray(int nums[], unsigned int size)
+{
+    unsigned int i = 0;
+    
+    if(size > 0)
+    {
+        printIntArrayMemory(nums, &nums[size-1]);
+    }
+}
+
+/* Prints an array with text before and after the array. Note: not per element */
+
+void printIntArrayPfix(char prefix[], int nums[], unsigned int size, char postfix[])
+{
+    printf("%s", prefix);
+    printIntArray(nums, size);
+    printf("%s", postfix);
+}
+
+/* Prints an array and then a newline character */
+
+void printIntArrayLn(int nums[], unsigned int size)
+{
+    printIntArrayPfix("", nums, size, "\n");
 }
