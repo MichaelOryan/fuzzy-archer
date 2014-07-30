@@ -19,7 +19,7 @@ void swapInt(int *a, int *b);
 
 main()
 {
-    int nums[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int nums[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
     unsigned int len = sizeof(nums)/sizeof(int);
     
     printIntArrayPfix("Original Array\n", nums, len, "\n");
@@ -54,7 +54,7 @@ void reverseIntMemory(int *first, int *last)
 {
     const int direction = first < last ? 1 : -1;
 
-    while(first != last)
+    while(first != last && first != last + direction)
     {
         swapInt(first, last);
         first += direction;
